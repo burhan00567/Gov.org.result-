@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Education Board Result</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Tahoma, sans-serif;
+      background: #ffffff;
+    }
+    .header {
+      background: #006400;
+      padding: 20px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 5px solid #006400;
+    }
+    .header img {
+      height: 60px;
+    }
+    .header .title {
+      flex-grow: 1;
+      text-align: center;
+    }
+    .header .title h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .header .title p {
+      margin: 0;
+      font-size: 16px;
+    }
+    .form-box {
+      width: 400px;
+      margin: 40px auto;
+      border: 1px solid #ccc;
+      padding: 25px 30px;
+      background: #f9f9f9;
+    }
+    .form-box label {
+      display: inline-block;
+      width: 120px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .form-box select, .form-box input[type="text"] {
+      width: 200px;
+      padding: 6px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .form-box .captcha {
+      margin-top: 10px;
+    }
+    .form-box input[type="submit"], .form-box input[type="reset"] {
+      padding: 8px 20px;
+      margin: 15px 10px 0 0;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: #555;
+      margin-top: 40px;
+      border-top: 2px solid #ccc;
+      padding-top: 10px;
+    }
+    .footer img {
+      height: 30px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Seal_of_the_Government_of_Bangladesh.svg" alt="Gov Logo">
+    <div class="title">
+      <h1>Ministry of Education</h1>
+      <p>Intermediate and Secondary Education Boards Bangladesh</p>
+      <small>Official Website of Education Board</small>
+    </div>
+    <div>
+      <img src="https://i.ibb.co/YR8p2Bn/red-ribbon.png" alt="Ribbon" height="50">
+    </div>
+  </div>
+
+  <div class="form-box">
+    <form target="_blank" action="https://www.educationboardresults.gov.bd/result.php" method="post">
+      <label>Examination :</label>
+      <select name="exam" required>
+        <option value="SSC">SSC/Dakhil/Equivalent</option>
+        <option value="SSC">SSC</option>
+        <option value="Dakhil">Dakhil</option>
+        <option value="SSC(Vocational)">SSC (Vocational)</option>
+      </select><br>
+
+      <label>Year :</label>
+      <select name="year" required>
+        <option value="">Select One</option>
+        <option value="2025">2025</option>
+        <option value="2024">2024</option>
+        <option value="2023">2023</option>
+      </select><br>
+
+      <label>Board :</label>
+      <select name="board" required>
+        <option value="">Select One</option>
+        <option value="DHA">Dhaka</option>
+        <option value="RAJ">Rajshahi</option>
+        <option value="MAD">Madrasah</option>
+        <option value="COM">Comilla</option>
+        <option value="JES">Jessore</option>
+        <option value="CHT">Chittagong</option>
+        <option value="BAR">Barisal</option>
+        <option value="SYL">Sylhet</option>
+        <option value="DIN">Dinajpur</option>
+        <option value="TEC">Technical</option>
+      </select><br>
+
+      <label>Roll :</label>
+      <input type="text" name="roll" required><br>
+
+      <label>Reg. No :</label>
+      <input type="text" name="reg"><br>
+
+      <label>6 + 5 =</label>
+      <input type="text" name="value_s" required class="captcha"><br>
+
+      <input type="submit" value="Submit">
+      <input type="reset" value="Reset">
+      <input type="hidden" name="button2" value="Submit">
+    </form>
+  </div>
+
+  <div class="footer">
+    ©2005–2025 Ministry of Education. All rights reserved.
+    <br>
+    <img src="https://i.ibb.co/q5NfHKd/teletalk.png" alt="Teletalk">
+  </div>
+
+</body>
+</html>
