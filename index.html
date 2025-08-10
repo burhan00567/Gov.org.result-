@@ -1,147 +1,931 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <title>Education Board Result</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Easy Shop</title>
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: Tahoma, sans-serif;
-      background: #ffffff;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .header {
-      background: #006400;
-      padding: 20px;
-      color: white;
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+    }
+    
+    header.header {
+      background-color: #ff4c3b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      box-shadow: 0 4px 9px rgba(0, 0, 0, 0.4);
+    }
+    .logo-container {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      border-bottom: 5px solid #006400;
+      gap: 10px;
+      flex-direction: row-reverse;
     }
-    .header img {
-      height: 60px;
+    
+    .logo {
+      font-size: 40px;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+      letter-spacing: 2px;
     }
-    .header .title {
-      flex-grow: 1;
-      text-align: center;
+    
+    .search-container {
+      display: flex;
+      width: 90%;
+      max-width: 400px;
+      margin: 20px auto;
+      background-color: #ff4c3b;
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     }
-    .header .title h1 {
-      margin: 0;
-      font-size: 20px;
-    }
-    .header .title p {
-      margin: 0;
+    .search-input {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
       font-size: 16px;
+      outline: none;
+      background-color: white;
+      color: #333;
     }
-    .form-box {
-      width: 400px;
-      margin: 40px auto;
-      border: 1px solid #ccc;
-      padding: 25px 30px;
-      background: #f9f9f9;
-    }
-    .form-box label {
-      display: inline-block;
-      width: 120px;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-    .form-box select, .form-box input[type="text"] {
-      width: 200px;
-      padding: 6px;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-    .form-box .captcha {
-      margin-top: 10px;
-    }
-    .form-box input[type="submit"], .form-box input[type="reset"] {
-      padding: 8px 20px;
-      margin: 15px 10px 0 0;
-      font-size: 14px;
+    .search-btn {
+      padding: 12px 18px;
+      background-color: #ff4c3b;
+      color: white;
+      border: none;
+      font-size: 18px;
       cursor: pointer;
     }
-    .footer {
+
+    .category-title {
+      background-color: #2ecc71;
+      color: white;
+      padding: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 20px 10px 10px;
+      border-radius: 6px;
       text-align: center;
-      font-size: 13px;
-      color: #555;
-      margin-top: 40px;
-      border-top: 2px solid #ccc;
-      padding-top: 10px;
     }
-    .footer img {
-      height: 30px;
-      margin-top: 5px;
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 10px 15px;
+      justify-content: center;
+    }
+
+    .gallery-item {
+      width: 160px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+      color: inherit;
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+    }
+
+    .product-name {
+      font-size: 14px;
+      font-weight: bold;
+      padding: 5px;
+      color: #333;
+    }
+
+    .discount-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: linear-gradient(270deg, #b22222, #ff4444, #b22222);
+      background-size: 400% 100%;
+      background-position: right;
+      color: white;
+      padding: 4px 8px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 0 0 0 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      animation: moveGradient 4s linear infinite, pop 0.8s ease-in-out infinite alternate;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+    
+    #product-details-view button {
+      background-color: #ff4c3b;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin-bottom: 20px;
+    }
+
+    #product-details-view button:hover {
+      background-color: #e63c2b;
+      transform: scale(1.05);
+    }
+    
+    #product-details-view {
+      max-width: 350px;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    #product-details-view img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    #product-details-view .product-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    #product-details-view .product-description {
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    #product-details-view .product-price {
+      text-align: center;
+      font-size: 18px;
+      color: #e53935;
+      margin-bottom: 10px;
+    }
+
+    #product-details-view .buy-button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #ff5722;
+      color: white;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: bold;
+      text-decoration: none;
+      margin-top: 15px;
+    }
+
+    #product-details-view button.back-button {
+      background-color: #ff4c3b;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    
+    @media (max-width: 600px) {
+      .logo {
+        font-size: 45px;
+      }
+    
+      #subcategory-list .gallery-item,
+      #subcategory-list-2 .gallery-item {
+        width: 31.31%;
+      }
+
+      #product-list .gallery-item {
+        width: 48.48%;
+      }
+    }
+
+    @keyframes moveGradient {
+      0% { background-position: right; }
+      100% { background-position: left; }
+    }
+
+    @keyframes pop {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
     }
   </style>
 </head>
 <body>
-
-  <div class="header">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Seal_of_the_Government_of_Bangladesh.svg" alt="Gov Logo">
-    <div class="title">
-      <h1>Ministry of Education</h1>
-      <p>Intermediate and Secondary Education Boards Bangladesh</p>
-      <small>Official Website of Education Board</small>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-container">
+      <svg width="55" height="55" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="dropshadow" height="130%">
+            <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="black" flood-opacity="0.6"/>
+          </filter>
+        </defs>
+        <g filter="url(#dropshadow)">
+          <circle cx="9" cy="21" r="1.5" fill="white" />
+          <circle cx="20" cy="21" r="1.5" fill="white" />
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+        </g>
+        <rect x="7.5" y="6.5" width="10" height="5" rx="1" fill="rgba(255,255,255,0.15)" />
+      </svg>
+      <div class="logo">Easy Shop</div>
     </div>
-    <div>
-      <img src="https://i.ibb.co/YR8p2Bn/red-ribbon.png" alt="Ribbon" height="50">
+  </header>
+
+  <!-- Search -->
+  <div class="search-container">
+    <input type="text" placeholder="পণ্য সার্চ করুন..." class="search-input" />
+    <button class="search-btn">🔍</button>
+  </div>
+ 
+  <!-- Category View -->
+  <div id="category-view">
+    <div class="category-title">খাবার</div>
+    <div id="subcategory-list" class="gallery">
+      <div class="gallery-item" data-subcategory="খাবার">
+        <span class="discount-badge">২৫% ছাড়</span>
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizqQmlx8EiGLUvxBwaIy_uck42TBM9_q04zHwfUkPHO75hueiL_kKkCMwfsRDZscHbLYYW9r5D5QsrchG1KUj6ryqQ3hhaCA1IQC_DDffzVlk8M3VDxbD8LbDOzz14WQ6CqTD_ZEIcl2C0t6jGalX80aFFDNEDkRwr2PbHatmKrGxiIDkBt_5BNn-ICPw/s720/1000084353.jpg" alt="খাবার">
+        <div class="product-name">খাবার</div>
+      </div>
+      <div class="gallery-item" data-subcategory="মসলা">
+        <span class="discount-badge">২০% ছাড়</span>
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_zc1A6x0KMUe2buE46zcpnXX0FDWLXQqlvwroFhFsaIkakv8V4xkHYHkVFUnuTZEDg7Y9zWfDdJuf3I-zbrtzMGkg5D8h2AN2PIs7LSGPqRqplygs5CkC1pSI7V2p4hqW0lsWg0wQMl36dEoYo53IFaWvUt9ji6fRsTZkw5fx4LEwDe_6aD-Jv_slD5g/s720/1000084348.jpg" alt="মসলা">
+        <div class="product-name">মসলা</div>
+      </div>
+      <div class="gallery-item" data-subcategory="মেডিসিন">
+        <span class="discount-badge">৩০% ছাড়</span>
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiDWfuXXcsClc39WTJhnWf2wuX-CkFe0ZLrNI6LQj44mil_Z8eOQabw1MWRcldiP0rGOrG5u4gHG7sWEiKpGDZceGUysgCamCwAxJQgNGMBCHfHcZNKVQTKC3rGWpRe1JS1kLLDq5hYGF_dsTftun5spFjhzFAouADl0d12AsZZm78cm7BHdtZEUtbdvvg/s720/1000084355.jpg" alt="মেডিসিন">
+        <div class="product-name">মেডিসিন</div>
+      </div>
+    </div>
+      
+    <div class="category-title">পোশাক</div>
+    <div id="subcategory-list-2" class="gallery">
+      <div class="gallery-item" data-subcategory="ছেলেদের পোশাক">
+        <span class="discount-badge">১০% ছাড়</span>
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgxndk-teYIiVkOeo9uvHkiQT5WwsrW41dSCCNfwubV76-U8Lz0yi4Nk8ZIaKgpdEEhHiBmROCPZWCiozsv9LjnlB-ITmdk_oQFjC6UUXCYyk8FIROGKDzoD1iDFZoHQsnZh2xAHJ_znl7_o8Ou_i12cKqJogr1psRSb2jN_ge4tFrl9S9XYV0l2OnUPAo/s720/1000084366.jpg" alt="ছেলেদের পোশাক">
+        <div class="product-name">ছেলেদের পোশাক</div>
+      </div>
+      <div class="gallery-item" data-subcategory="মেয়েদের পোশাক">
+        <span class="discount-badge">১৫% ছাড়</span>
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi376W_5orXmcOzyjkS6cIawzv9ndN2lHiIDaiLoC6EdpuRdOZGdmzStQKBuV5rizpeRBWKKXKePSne0Mwtwh2SsAUlFV7RQygFU5qc-KqIN8kV99NcayGfWOvj0BqNNoClAaUsDHG6giBkv7z7WIJeJsxnzDXtIX1bCMlJTO8O7rQJmz2WN-aKQUUtgmg/s720/1000084364.jpg" alt="মেয়েদের পোশাক">
+        <div class="product-name">মেয়েদের পোশাক</div>
+      </div>
+      <div class="gallery-item" data-subcategory="বাচ্চাদের পোশাক">
+        <span class="discount-badge">২০% ছাড়</span>
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjvxVUIdCLOKikWpIU-1dTUlIwyw7Ji3MQ5bomWg8TA7EV17GcKQvLQ4ptQUti0ocXg6auVV3NmypiiqD44P1JccdPeh92W8Drer1TQIkzINdY1vWCEkpP3ZZDTikCE4A5qluQ3vO9mS6xz5AY3Tf7ZssC1dVPXa9vaYELpGEBXPYuwbOxVNZEATY6Zl0E/s720/1000084360.jpg" alt="বাচ্চাদের পোশাক">
+        <div class="product-name">বাচ্চাদের পোশাক</div>
+      </div>
     </div>
   </div>
 
-  <div class="form-box">
-    <form target="_blank" action="https://www.educationboardresults.gov.bd/result.php" method="post">
-      <label>Examination :</label>
-      <select name="exam" required>
-        <option value="SSC">SSC/Dakhil/Equivalent</option>
-        <option value="SSC">SSC</option>
-        <option value="Dakhil">Dakhil</option>
-        <option value="SSC(Vocational)">SSC (Vocational)</option>
-      </select><br>
+  <!-- Product Details View -->
+  <div id="product-details-view" style="display:none; padding: 20px;">
+    <button class="back-button" onclick="closeProductDetail()" style="background-color:#ff4d4d; color:white; padding:8px 12px; border:none; border-radius:6px;">⬅️ ফিরে যান</button>
+    
+    <div style="text-align:center;">
+      <h2 id="detail-name" style="margin-top: -17px; font-size: 28px; font-weight:bold;"></h2>
+      
+      <div id="detail-image-slider" style="position: relative; max-width: 300px; margin: auto; border-radius: 10px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+        <img id="slider-image" src="" alt="Product Image" style="width: 100%; display: block; border-radius: 10px;" />
+        
+        <div id="detail-image-slider" style="
+          display: flex;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          gap: 10px;
+          padding: 10px;
+          max-width: 300px;
+          margin: auto;
+          border-radius: 10px;
+          scroll-behavior: smooth;
+        "></div>
+      </div>
+    </div>
 
-      <label>Year :</label>
-      <select name="year" required>
-        <option value="">Select One</option>
-        <option value="2025">2025</option>
-        <option value="2024">2024</option>
-        <option value="2023">2023</option>
-      </select><br>
+    <div id="detail-description" style="
+      max-width: 300px;
+      margin: 20px auto 0;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f8f8f8;
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: none;
+    "></div>
 
-      <label>Board :</label>
-      <select name="board" required>
-        <option value="">Select One</option>
-        <option value="DHA">Dhaka</option>
-        <option value="RAJ">Rajshahi</option>
-        <option value="MAD">Madrasah</option>
-        <option value="COM">Comilla</option>
-        <option value="JES">Jessore</option>
-        <option value="CHT">Chittagong</option>
-        <option value="BAR">Barisal</option>
-        <option value="SYL">Sylhet</option>
-        <option value="DIN">Dinajpur</option>
-        <option value="TEC">Technical</option>
-      </select><br>
+    <div style="
+      display: flex;
+      justify-content: center;
+      gap: 120px;
+      align-items: center;
+      margin-top: 15px;
+    ">
+      <p id="detail-current-price" style="
+        color: #e53935;
+        font-size: 18px;
+        font-weight: bold;
+        margin: 20;
+        position: relative;
+        right: -13px;
+      ">
+        ৳৪০০
+      </p>
 
-      <label>Roll :</label>
-      <input type="text" name="roll" required><br>
+      <p id="detail-price" style="
+        color: #999;
+        font-size: 16px;
+        margin: 20;
+        text-decoration: line-through;
+        position: relative;
+        left: -59px;
+      ">
+        ৳৫০০
+      </p>
+    </div>
 
-      <label>Reg. No :</label>
-      <input type="text" name="reg"><br>
+    <!-- Quantity এবং মোট টাকার হিসাব -->
+    <div class="quantity-section" style="display: flex; justify-content: center; align-items: center; gap: 15px; margin: 9px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: px;font-weight: bold;">
+        <label for="detail-qty">পরিমান :</label>
+        <select id="detail-qty" style="padding: 5px; font-size: 18px;font-weight: bold;">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <div id="detail-total" style="font-size: 16px; font-weight: bold; color: green;">Total: ৳০</div>
+    </div>
 
-      <label>6 + 5 =</label>
-      <input type="text" name="value_s" required class="captcha"><br>
-
-      <input type="submit" value="Submit">
-      <input type="reset" value="Reset">
-      <input type="hidden" name="button2" value="Submit">
-    </form>
+    <div style="display: flex; justify-content: center;">
+      <a id="detail-order-btn" href="#" style="padding: 10px 20px; background-color: green; color: white; border: none; border-radius: 5px; font-size: 16px; text-decoration: none;font-weight:bold;">  
+        🛒 অর্ডার করুন  
+      </a>
+    </div>
   </div>
 
-  <div class="footer">
-    ©2005–2025 Ministry of Education. All rights reserved.
-    <br>
-    <img src="https://i.ibb.co/q5NfHKd/teletalk.png" alt="Teletalk">
+  <!-- Product View -->
+  <div id="product-view" style="display: none;">
+    <button id="back-to-category" style="margin: 10px 15px; padding: 8px 12px; background: #ff4c3b; color: white; border: none; border-radius: 5px; cursor: pointer;">⬅️ পেছনে যান</button>
+    <div id="selected-subcategory-title" class="category-title"></div>
+    <div id="product-list" class="gallery"></div>
   </div>
 
+  <footer>© 2025 Easy Shop</footer>
+
+  <script>
+    // সাবক্যাটাগরি এবং প্রোডাক্ট ডাটা
+    const subcategories = {
+      "খাবার": [
+        { 
+          name: "ভাত", 
+          discount: "১৫% ",
+          price:"60",
+          originalPrice:"120",
+          img:"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizqQmlx8EiGLUvxBwaIy_uck42TBM9_q04zHwfUkPHO75hueiL_kKkCMwfsRDZscHbLYYW9r5D5QsrchG1KUj6ryqQ3hhaCA1IQC_DDffzVlk8M3VDxbD8LbDOzz14WQ6CqTD_ZEIcl2C0t6jGalX80aFFDNEDkRwr2PbHatmKrGxiIDkBt_5BNn-ICPw/s720/1000084353.jpg", 
+          description:"আসসালামু আলাইকুম, আমি ফ্রি আছি আমাকে ফলো করুন ১০ সেকেন্ডেের মধ্যে ফলো বেক দিব ইনশাআল্লাহ।",
+          images: [
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizqQmlx8EiGLUvxBwaIy_uck42TBM9_q04zHwfUkPHO75hueiL_kKkCMwfsRDZscHbLYYW9r5D5QsrchG1KUj6ryqQ3hhaCA1IQC_DDffzVlk8M3VDxbD8LbDOzz14WQ6CqTD_ZEIcl2C0t6jGalX80aFFDNEDkRwr2PbHatmKrGxiIDkBt_5BNn-ICPw/s720/1000084353.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_zc1A6x0KMUe2buE46zcpnXX0FDWLXQqlvwroFhFsaIkakv8V4xkHYHkVFUnuTZEDg7Y9zWfDdJuf3I-zbrtzMGkg5D8h2AN2PIs7LSGPqRqplygs5CkC1pSI7V2p4hqW0lsWg0wQMl36dEoYo53IFaWvUt9ji6fRsTZkw5fx4LEwDe_6aD-Jv_slD5g/s720/1000084348.jpg"
+          ]
+        },
+        { 
+          name: "মাংস", 
+          discount: "১০% ছাড়",
+          price:"30",
+          originalPrice:"120",
+          img:"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizqQmlx8EiGLUvxBwaIy_uck42TBM9_q04zHwfUkPHO75hueiL_kKkCMwfsRDZscHbLYYW9r5D5QsrchG1KUj6ryqQ3hhaCA1IQC_DDffzVlk8M3VDxbD8LbDOzz14WQ6CqTD_ZEIcl2C0t6jGalX80aFFDNEDkRwr2PbHatmKrGxiIDkBt_5BNn-ICPw/s720/1000084353.jpg",
+          images: [
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizqQmlx8EiGLUvxBwaIy_uck42TBM9_q04zHwfUkPHO75hueiL_kKkCMwfsRDZscHbLYYW9r5D5QsrchG1KUj6ryqQ3hhaCA1IQC_DDffzVlk8M3VDxbD8LbDOzz14WQ6CqTD_ZEIcl2C0t6jGalX80aFFDNEDkRwr2PbHatmKrGxiIDkBt_5BNn-ICPw/s720/1000084353.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_zc1A6x0KMUe2buE46zcpnXX0FDWLXQqlvwroFhFsaIkakv8V4xkHYHkVFUnuTZEDg7Y9zWfDdJuf3I-zbrtzMGkg5D8h2AN2PIs7LSGPqRqplygs5CkC1pSI7V2p4hqW0lsWg0wQMl36dEoYo53IFaWvUt9ji6fRsTZkw5fx4LEwDe_6aD-Jv_slD5g/s720/1000084348.jpg"
+          ]
+        },
+        { 
+          name: "মাছ", 
+          discount: "২০% ছাড়",
+          price:"42",
+          originalPrice:"120", 
+          img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizqQmlx8EiGLUvxBwaIy_uck42TBM9_q04zHwfUkPHO75hueiL_kKkCMwfsRDZscHbLYYW9r5D5QsrchG1KUj6ryqQ3hhaCA1IQC_DDffzVlk8M3VDxbD8LbDOzz14WQ6CqTD_ZEIcl2C0t6jGalX80aFFDNEDkRwr2PbHatmKrGxiIDkBt_5BNn-ICPw/s720/1000084353.jpg",
+          images: [
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizqQmlx8EiGLUvxBwaIy_uck42TBM9_q04zHwfUkPHO75hueiL_kKkCMwfsRDZscHbLYYW9r5D5QsrchG1KUj6ryqQ3hhaCA1IQC_DDffzVlk8M3VDxbD8LbDOzz14WQ6CqTD_ZEIcl2C0t6jGalX80aFFDNEDkRwr2PbHatmKrGxiIDkBt_5BNn-ICPw/s720/1000084353.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_zc1A6x0KMUe2buE46zcpnXX0FDWLXQqlvwroFhFsaIkakv8V4xkHYHkVFUnuTZEDg7Y9zWfDdJuf3I-zbrtzMGkg5D8h2AN2PIs7LSGPqRqplygs5CkC1pSI7V2p4hqW0lsWg0wQMl36dEoYo53IFaWvUt9ji6fRsTZkw5fx4LEwDe_6aD-Jv_slD5g/s720/1000084348.jpg"
+          ]
+        }
+      ],
+      "মসলা": [
+        { 
+          name: "গোলমরিচ", 
+          discount: "১০% ছাড়",
+          price:"74",
+          originalPrice:"120", 
+          img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_zc1A6x0KMUe2buE46zcpnXX0FDWLXQqlvwroFhFsaIkakv8V4xkHYHkVFUnuTZEDg7Y9zWfDdJuf3I-zbrtzMGkg5D8h2AN2PIs7LSGPqRqplygs5CkC1pSI7V2p4hqW0lsWg0wQMl36dEoYo53IFaWvUt9ji6fRsTZkw5fx4LEwDe_6aD-Jv_slD5g/s720/1000084348.jpg",
+          images: [
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_zc1A6x0KMUe2buE46zcpnXX0FDWLXQqlvwroFhFsaIkakv8V4xkHYHkVFUnuTZEDg7Y9zWfDdJuf3I-zbrtzMGkg5D8h2AN2PIs7LSGPqRqplygs5CkC1pSI7V2p4hqW0lsWg0wQMl36dEoYo53IFaWvUt9ji6fRsTZkw5fx4LEwDe_6aD-Jv_slD5g/s720/1000084348.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiDWfuXXcsClc39WTJhnWf2wuX-CkFe0ZLrNI6LQj44mil_Z8eOQabw1MWRcldiP0rGOrG5u4gHG7sWEiKpGDZceGUysgCamCwAxJQgNGMBCHfHcZNKVQTKC3rGWpRe1JS1kLLDq5hYGF_dsTftun5spFjhzFAouADl0d12AsZZm78cm7BHdtZEUtbdvvg/s720/1000084355.jpg"
+          ]
+        },
+        { 
+          name: "লবণ", 
+          discount: "২০% ছাড়",
+          price:"86",
+          originalPrice:"120",  
+          img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_zc1A6x0KMUe2buE46zcpnXX0FDWLXQqlvwroFhFsaIkakv8V4xkHYHkVFUnuTZEDg7Y9zWfDdJuf3I-zbrtzMGkg5D8h2AN2PIs7LSGPqRqplygs5CkC1pSI7V2p4hqW0lsWg0wQMl36dEoYo53IFaWvUt9ji6fRsTZkw5fx4LEwDe_6aD-Jv_slD5g/s720/1000084348.jpg",
+          images: [
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_zc1A6x0KMUe2buE46zcpnXX0FDWLXQqlvwroFhFsaIkakv8V4xkHYHkVFUnuTZEDg7Y9zWfDdJuf3I-zbrtzMGkg5D8h2AN2PIs7LSGPqRqplygs5CkC1pSI7V2p4hqW0lsWg0wQMl36dEoYo53IFaWvUt9ji6fRsTZkw5fx4LEwDe_6aD-Jv_slD5g/s720/1000084348.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiDWfuXXcsClc39WTJhnWf2wuX-CkFe0ZLrNI6LQj44mil_Z8eOQabw1MWRcldiP0rGOrG5u4gHG7sWEiKpGDZceGUysgCamCwAxJQgNGMBCHfHcZNKVQTKC3rGWpRe1JS1kLLDq5hYGF_dsTftun5spFjhzFAouADl0d12AsZZm78cm7BHdtZEUtbdvvg/s720/1000084355.jpg"
+          ]
+        },
+        { 
+          name: "হলুদ", 
+          discount: "২৫% ছাড়",
+          price:"64",  
+          img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_zc1A6x0KMUe2buE46zcpnXX0FDWLXQqlvwroFhFsaIkakv8V4xkHYHkVFUnuTZEDg7Y9zWfDdJuf3I-zbrtzMGkg5D8h2AN2PIs7LSGPqRqplygs5CkC1pSI7V2p4hqW0lsWg0wQMl36dEoYo53IFaWvUt9ji6fRsTZkw5fx4LEwDe_6aD-Jv_slD5g/s720/1000084348.jpg",
+          images: [
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_zc1A6x0KMUe2buE46zcpnXX0FDWLXQqlvwroFhFsaIkakv8V4xkHYHkVFUnuTZEDg7Y9zWfDdJuf3I-zbrtzMGkg5D8h2AN2PIs7LSGPqRqplygs5CkC1pSI7V2p4hqW0lsWg0wQMl36dEoYo53IFaWvUt9ji6fRsTZkw5fx4LEwDe_6aD-Jv_slD5g/s720/1000084348.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiDWfuXXcsClc39WTJhnWf2wuX-CkFe0ZLrNI6LQj44mil_Z8eOQabw1MWRcldiP0rGOrG5u4gHG7sWEiKpGDZceGUysgCamCwAxJQgNGMBCHfHcZNKVQTKC3rGWpRe1JS1kLLDq5hYGF_dsTftun5spFjhzFAouADl0d12AsZZm78cm7BHdtZEUtbdvvg/s720/1000084355.jpg"
+          ]
+        }
+      ],
+      "মেডিসিন": [
+        { 
+          name: "প্যারাসিটামল", 
+          discount: "৩০% ছাড়",
+          price:"80",  
+          img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiDWfuXXcsClc39WTJhnWf2wuX-CkFe0ZLrNI6LQj44mil_Z8eOQabw1MWRcldiP0rGOrG5u4gHG7sWEiKpGDZceGUysgCamCwAxJQgNGMBCHfHcZNKVQTKC3rGWpRe1JS1kLLDq5hYGF_dsTftun5spFjhzFAouADl0d12AsZZm78cm7BHdtZEUtbdvvg/s720/1000084355.jpg",
+          images: [
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiDWfuXXcsClc39WTJhnWf2wuX-CkFe0ZLrNI6LQj44mil_Z8eOQabw1MWRcldiP0rGOrG5u4gHG7sWEiKpGDZceGUysgCamCwAxJQgNGMBCHfHcZNKVQTKC3rGWpRe1JS1kLLDq5hYGF_dsTftun5spFjhzFAouADl0d12AsZZm78cm7BHdtZEUtbdvvg/s720/1000084355.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi376W_5orXmcOzyjkS6cIawzv9ndN2lHiIDaiLoC6EdpuRdOZGdmzStQKBuV5rizpeRBWKKXKePSne0Mwtwh2SsAUlFV7RQygFU5qc-KqIN8kV99NcayGfWOvj0BqNNoClAaUsDHG6giBkv7z7WIJeJsxnzDXtIX1bCMlJTO8O7rQJmz2WN-aKQUUtgmg/s720/1000084364.jpg"
+          ]
+        },
+        { 
+          name: "ক্যাপসুল", 
+          discount: "২৫% ছাড়", 
+          price:"66", 
+          img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiDWfuXXcsClc39WTJhnWf2wuX-CkFe0ZLrNI6LQj44mil_Z8eOQabw1MWRcldiP0rGOrG5u4gHG7sWEiKpGDZceGUysgCamCwAxJQgNGMBCHfHcZNKVQTKC3rGWpRe1JS1kLLDq5hYGF_dsTftun5spFjhzFAouADl0d12AsZZm78cm7BHdtZEUtbdvvg/s720/1000084355.jpg",
+          images: [
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiDWfuXXcsClc39WTJhnWf2wuX-CkFe0ZLrNI6LQj44mil_Z8eOQabw1MWRcldiP0rGOrG5u4gHG7sWEiKpGDZceGUysgCamCwAxJQgNGMBCHfHcZNKVQTKC3rGWpRe1JS1kLLDq5hYGF_dsTftun5spFjhzFAouADl0d12AsZZm78cm7BHdtZEUtbdvvg/s720/1000084355.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi376W_5orXmcOzyjkS6cIawzv9ndN2lHiIDaiLoC6EdpuRdOZGdmzStQKBuV5rizpeRBWKKXKePSne0Mwtwh2SsAUlFV7RQygFU5qc-KqIN8kV99NcayGfWOvj0BqNNoClAaUsDHG6giBkv7z7WIJeJsxnzDXtIX1bCMlJTO8O7rQJmz2WN-aKQUUtgmg/s720/1000084364.jpg"
+          ]
+        },
+        { 
+          name: "মালিশ তেল", 
+          discount: "১৫% ছাড়", 
+          price:"8", 
+          img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiDWfuXXcsClc39WTJhnWf2wuX-CkFe0ZLrNI6LQj44mil_Z8eOQabw1MWRcldiP0rGOrG5u4gHG7sWEiKpGDZceGUysgCamCwAxJQgNGMBCHfHcZNKVQTKC3rGWpRe1JS1kLLDq5hYGF_dsTftun5spFjhzFAouADl0d12AsZZm78cm7BHdtZEUtbdvvg/s720/1000084355.jpg",
+          images: [
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiDWfuXXcsClc39WTJhnWf2wuX-CkFe0ZLrNI6LQj44mil_Z8eOQabw1MWRcldiP0rGOrG5u4gHG7sWEiKpGDZceGUysgCamCwAxJQgNGMBCHfHcZNKVQTKC3rGWpRe1JS1kLLDq5hYGF_dsTftun5spFjhzFAouADl0d12AsZZm78cm7BHdtZEUtbdvvg/s720/1000084355.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi376W_5orXmcOzyjkS6cIawzv9ndN2lHiIDaiLoC6EdpuRdOZGdmzStQKBuV5rizpeRBWKKXKePSne0Mwtwh2SsAUlFV7RQygFU5qc-KqIN8kV99NcayGfWOvj0BqNNoClAaUsDHG6giBkv7z7WIJeJsxnzDXtIX1bCMlJTO8O7rQJmz2WN-aKQUUtgmg/s720/1000084364.jpg"
+          ]
+        },
+        { 
+          name: "ভাত", 
+          discount: "১৫% ছাড়",
+          price:"60", 
+          img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizqQmlx8EiGLUvxBwaIy_uck42TBM9_q04zHwfUkPHO75hueiL_kKkCMwfsRDZscHbLYYW9r5D5QsrchG1KUj6ryqQ3hhaCA1IQC_DDffzVlk8M3VDxbD8LbDOzz14WQ6CqTD_ZEIcl2C0t6jGalX80aFFDNEDkRwr2PbHatmKrGxiIDkBt_5BNn-ICPw/s720/1000084353.jpg",
+          images: [
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizqQmlx8EiGLUvxBwaIy_uck42TBM9_q04zHwfUkPHO75hueiL_kKkCMwfsRDZscHbLYYW9r5D5QsrchG1KUj6ryqQ3hhaCA1IQC_DDffzVlk8M3VDxbD8LbDOzz14WQ6CqTD_ZEIcl2C0t6jGalX80aFFDNEDkRwr2PbHatmKrGxiIDkBt_5BNn-ICPw/s720/1000084353.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_zc1A6x0KMUe2buE46zcpnXX0FDWLXQqlvwroFhFsaIkakv8V4xkHYHkVFUnuTZEDg7Y9zWfDdJuf3I-zbrtzMGkg5D8h2AN2PIs7LSGPqRqplygs5CkC1pSI7V2p4hqW0lsWg0wQMl36dEoYo53IFaWvUt9ji6fRsTZkw5fx4LEwDe_6aD-Jv_slD5g/s720/1000084348.jpg"
+          ]
+        }
+      ],
+      "ছেলেদের পোশাক": [
+        { 
+          name: "টি-শার্ট", 
+          discount: "১০% ছাড়", 
+          price: "350", 
+          img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizqQmlx8EiGLUvxBwaIy_uck42TBM9_q04zHwfUkPHO75hueiL_kKkCMwfsRDZscHbLYYW9r5D5QsrchG1KUj6ryqQ3hhaCA1IQC_DDffzVlk8M3VDxbD8LbDOzz14WQ6CqTD_ZEIcl2C0t6jGalX80aFFDNEDkRwr2PbHatmKrGxiIDkBt_5BNn-ICPw/s720/1000084353.jpg",
+          images: [
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizqQmlx8EiGLUvxBwaIy_uck42TBM9_q04zHwfUkPHO75hueiL_kKkCMwfsRDZscHbLYYW9r5D5QsrchG1KUj6ryqQ3hhaCA1IQC_DDffzVlk8M3VDxbD8LbDOzz14WQ6CqTD_ZEIcl2C0t6jGalX80aFFDNEDkRwr2PbHatmKrGxiIDkBt_5BNn-ICPw/s720/1000084353.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgxndk-teYIiVkOeo9uvHkiQT5WwsrW41dSCCNfwubV76-U8Lz0yi4Nk8ZIaKgpdEEhHiBmROCPZWCiozsv9LjnlB-ITmdk_oQFjC6UUXCYyk8FIROGKDzoD1iDFZoHQsnZh2xAHJ_znl7_o8Ou_i12cKqJogr1psRSb2jN_ge4tFrl9S9XYV0l2OnUPAo/s720/1000084366.jpg"
+          ]
+        },
+        { 
+          name: "শার্ট", 
+          discount: "১৫% ছাড়", 
+          price: "550", 
+          img: "https://i.ibb.co/NVwK2sj/men.jpg",
+          images: [
+            "https://i.ibb.co/NVwK2sj/men.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgxndk-teYIiVkOeo9uvHkiQT5WwsrW41dSCCNfwubV76-U8Lz0yi4Nk8ZIaKgpdEEhHiBmROCPZWCiozsv9LjnlB-ITmdk_oQFjC6UUXCYyk8FIROGKDzoD1iDFZoHQsnZh2xAHJ_znl7_o8Ou_i12cKqJogr1psRSb2jN_ge4tFrl9S9XYV0l2OnUPAo/s720/1000084366.jpg"
+          ]
+        }
+      ],
+      "মেয়েদের পোশাক": [
+        { 
+          name: "সালোয়ার", 
+          discount: "২০% ছাড়", 
+          price: "480", 
+          img: "https://i.ibb.co/yFChpXY/women.jpg",
+          images: [
+            "https://i.ibb.co/yFChpXY/women.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi376W_5orXmcOzyjkS6cIawzv9ndN2lHiIDaiLoC6EdpuRdOZGdmzStQKBuV5rizpeRBWKKXKePSne0Mwtwh2SsAUlFV7RQygFU5qc-KqIN8kV99NcayGfWOvj0BqNNoClAaUsDHG6giBkv7z7WIJeJsxnzDXtIX1bCMlJTO8O7rQJmz2WN-aKQUUtgmg/s720/1000084364.jpg"
+          ]
+        },
+        { 
+          name: "ব্লাউজ", 
+          discount: "১৫% ছাড়", 
+          price: "300", 
+          img: "https://i.ibb.co/yFChpXY/women.jpg",
+          images: [
+            "https://i.ibb.co/yFChpXY/women.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi376W_5orXmcOzyjkS6cIawzv9ndN2lHiIDaiLoC6EdpuRdOZGdmzStQKBuV5rizpeRBWKKXKePSne0Mwtwh2SsAUlFV7RQygFU5qc-KqIN8kV99NcayGfWOvj0BqNNoClAaUsDHG6giBkv7z7WIJeJsxnzDXtIX1bCMlJTO8O7rQJmz2WN-aKQUUtgmg/s720/1000084364.jpg"
+          ]
+        }
+      ],
+      "বাচ্চাদের পোশাক": [
+        { 
+          name: "বেবি ফ্রক", 
+          discount: "২৫% ছাড়", 
+          price: "250", 
+          img: "https://i.ibb.co/Wzh5PkH/kids.jpg",
+          images: [
+            "https://i.ibb.co/Wzh5PkH/kids.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjvxVUIdCLOKikWpIU-1dTUlIwyw7Ji3MQ5bomWg8TA7EV17GcKQvLQ4ptQUti0ocXg6auVV3NmypiiqD44P1JccdPeh92W8Drer1TQIkzINdY1vWCEkpP3ZZDTikCE4A5qluQ3vO9mS6xz5AY3Tf7ZssC1dVPXa9vaYELpGEBXPYuwbOxVNZEATY6Zl0E/s720/1000084360.jpg"
+          ]
+        },
+        { 
+          name: "ছোটদের হাফপ্যান্ট", 
+          discount: "১০% ছাড়", 
+          price: "150", 
+          img: "https://i.ibb.co/Wzh5PkH/kids.jpg",
+          images: [
+            "https://i.ibb.co/Wzh5PkH/kids.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjvxVUIdCLOKikWpIU-1dTUlIwyw7Ji3MQ5bomWg8TA7EV17GcKQvLQ4ptQUti0ocXg6auVV3NmypiiqD44P1JccdPeh92W8Drer1TQIkzINdY1vWCEkpP3ZZDTikCE4A5qluQ3vO9mS6xz5AY3Tf7ZssC1dVPXa9vaYELpGEBXPYuwbOxVNZEATY6Zl0E/s720/1000084360.jpg"
+          ]
+        }
+      ]
+    };
+
+    // DOM elements
+    const categoryView = document.getElementById('category-view');
+    const productView = document.getElementById('product-view');
+    const subcategoryList = document.getElementById('subcategory-list');
+    const subcategoryList2 = document.getElementById('subcategory-list-2');
+    const productList = document.getElementById('product-list');
+    const selectedSubcategoryTitle = document.getElementById('selected-subcategory-title');
+    const backBtn = document.getElementById('back-to-category');
+    const searchInput = document.querySelector('.search-input');
+    const productDetailsView = document.getElementById('product-details-view');
+
+    // State management
+    let currentView = 'category'; // 'category', 'product-list', 'product-detail'
+    let currentSubcategory = '';
+    let currentProduct = null;
+    let detailUnitPrice = 0;
+    let detailProductName = '';
+    let sliderImages = [];
+    let currentSlideIndex = 0;
+    let slideInterval;
+
+    // Initialize slider image element
+    const sliderImageEl = document.getElementById('slider-image');
+
+    // Navigation functions
+ function updateHistory(replace = false) {
+  const state = {
+    view: currentView,
+    subcategory: currentSubcategory,
+    product: currentProduct?.name || ''
+  };
+
+  let url = '';
+  if (currentView === 'product-list') {
+    url = `?subcategory=${encodeURIComponent(currentSubcategory)}`;
+  } else if (currentView === 'product-detail') {
+    url = `?subcategory=${encodeURIComponent(currentSubcategory)}&product=${encodeURIComponent(currentProduct.name)}`;
+  }
+
+  if (replace) {
+    history.replaceState(state, '', url);
+  } else {
+    history.pushState(state, '', url);
+  }
+}
+
+// পেজ লোডের সময় প্রথম state সেট
+document.addEventListener('DOMContentLoaded', function () {
+  updateHistory(true); // প্রথমবার replaceState ব্যবহার
+  const urlParams = new URLSearchParams(window.location.search);
+  const subcategory = urlParams.get('subcategory');
+  const product = urlParams.get('product');
+
+  if (subcategory && subcategories[subcategory]) {
+    showProducts(subcategory);
+    if (product) {
+      const foundProduct = subcategories[subcategory].find(p => p.name === product);
+      if (foundProduct) showProductDetail(foundProduct);
+    }
+  }
+});
+
+    function showProducts(subcat) {
+      currentView = 'product-list';
+      currentSubcategory = subcat;
+      currentProduct = null;
+      updateHistory();
+      
+      selectedSubcategoryTitle.textContent = subcat;
+      productList.innerHTML = '';
+      
+      subcategories[subcat].forEach(prod => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        item.innerHTML = `
+          <span class="discount-badge">${prod.discount}</span>
+          <img src="${prod.img}" alt="${prod.name}" />
+          <p style="font-weight:bold;"> ${prod.name}</p>
+          <p style="font-weight:bold;">মূল্য:  ${prod.price}</p>
+         
+        `;
+        item.onclick = () => showProductDetail(prod);
+        productList.appendChild(item);
+      });
+
+      categoryView.style.display = 'none';
+      productView.style.display = 'block';
+      productDetailsView.style.display = 'none';
+    }
+
+    function showProductDetail(product) {
+      currentView = 'product-detail';
+      currentProduct = product;
+      updateHistory();
+      
+      document.getElementById('detail-name').textContent = product.name;
+      sliderImages = (product.images && product.images.length > 0) ? product.images : [product.img || 'placeholder.jpg'];
+      showSlide(0);
+      startSlideShow();
+
+      const priceEl = document.getElementById('detail-price');
+      if(product.originalPrice){
+        priceEl.textContent = `৳${product.originalPrice}`;
+        priceEl.style.textDecoration = 'line-through';
+        priceEl.style.display = 'inline-block';
+      } else {
+        priceEl.textContent = '';
+        priceEl.style.display = 'none';
+      }
+
+      document.getElementById('detail-current-price').textContent = `মূল্য : ৳${product.price}`;
+      const descEl = document.getElementById('detail-description');
+      if(product.description){
+        descEl.textContent = product.description;
+        descEl.style.display = 'block';
+      } else {
+        descEl.textContent = '';
+        descEl.style.display = 'none';
+      }
+
+      document.getElementById('detail-qty').value = "1";
+      detailUnitPrice = parseFloat(product.price.toString().replace(/[^\d.]/g, '')) || 0;
+      detailProductName = product.name;
+      updateDetailTotal();
+
+      productDetailsView.style.display = 'block';
+      productView.style.display = 'none';
+      categoryView.style.display = 'none';
+    }
+
+    function closeProductDetail() {
+      if (currentView === 'product-detail') {
+        currentView = 'product-list';
+        updateHistory();
+      }
+      productDetailsView.style.display = 'none';
+      productView.style.display = 'block';
+    }
+
+    function goBackToCategories() {
+      currentView = 'category';
+      currentSubcategory = '';
+      currentProduct = null;
+      updateHistory();
+      
+      categoryView.style.display = 'block';
+      productView.style.display = 'none';
+      productDetailsView.style.display = 'none';
+      selectedSubcategoryTitle.textContent = '';
+      productList.innerHTML = '';
+      searchInput.value = '';
+    }
+
+    // Image slider functions
+    function showSlide(index) {
+      if (!Array.isArray(sliderImages) || sliderImages.length === 0) return;
+      currentSlideIndex = (index + sliderImages.length) % sliderImages.length;
+      sliderImageEl.src = sliderImages[currentSlideIndex];
+      sliderImageEl.alt = `Product Image ${currentSlideIndex + 1}`;
+    }
+
+    function nextSlide() {
+      showSlide(currentSlideIndex + 1);
+    }
+
+    function prevSlide() {
+      showSlide(currentSlideIndex - 1);
+    }
+
+    function startSlideShow() {
+      clearInterval(slideInterval);
+      slideInterval = setInterval(() => {
+        nextSlide();
+      }, 3000);
+    }
+
+    // Total price calculation
+    function updateDetailTotal() {
+      const qty = parseInt(document.getElementById('detail-qty').value);
+      const total = qty * detailUnitPrice;
+      document.getElementById('detail-total').innerText = `Total: ৳${total}`;
+
+      const url = `https://orderpag.netlify.app?product=${encodeURIComponent(detailProductName)}&qty=${qty}&price=${total}`;
+      document.getElementById('detail-order-btn').href = url;
+    }
+
+    // Event listeners
+    subcategoryList.addEventListener('click', e => {
+      const item = e.target.closest('.gallery-item');
+      if (!item) return;
+      const subcat = item.getAttribute('data-subcategory');
+      if (!subcat) return;
+      showProducts(subcat);
+    });
+
+    subcategoryList2.addEventListener('click', e => {
+      const item = e.target.closest('.gallery-item');
+      if (!item) return;
+      const subcat = item.getAttribute('data-subcategory');
+      if (!subcat) return;
+      showProducts(subcat);
+    });
+
+    backBtn.addEventListener('click', goBackToCategories);
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase().trim();
+      productDetailsView.style.display = 'none';
+
+      if (!query) {
+        goBackToCategories();
+        return;
+      }
+
+      currentView = 'product-list';
+      currentSubcategory = 'search';
+      selectedSubcategoryTitle.textContent = 'সার্চ ফলাফল';
+      productList.innerHTML = '';
+
+      // Search in subcategories
+      Array.from(subcategoryList.children).concat(Array.from(subcategoryList2.children)).forEach(item => {
+        const name = item.querySelector('.product-name').textContent.toLowerCase();
+        if (name.includes(query)) {
+          const clonedItem = item.cloneNode(true);
+          const prodName = clonedItem.querySelector('.product-name').textContent;
+          const subcat = clonedItem.getAttribute('data-subcategory');
+          const prod = subcategories[subcat]?.find(p => p.name === prodName);
+          
+          if (prod) {
+            clonedItem.onclick = () => showProductDetail(prod);
+            productList.appendChild(clonedItem);
+          }
+        }
+      });
+
+      // Search in products
+      for (const subcat in subcategories) {
+        subcategories[subcat].forEach(prod => {
+          if (prod.name.toLowerCase().includes(query)) {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.innerHTML = `
+              <span class="discount-badge">${prod.discount || ''}</span>
+              <img src="${prod.img}" alt="${prod.name}" />
+              <div class="product-name" style="font-size:20px;margin-top:-8px;text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);">${prod.name}</div>
+              <div class="product-price" style="font-weight:bold; color:#000;margin-bottom:12px;">মূল্য: ${prod.price}</div>
+            `;
+            item.onclick = () => showProductDetail(prod);
+            productList.appendChild(item);
+          }
+        });
+      }
+
+      categoryView.style.display = 'none';
+      productView.style.display = 'block';
+    });
+
+    // Slider touch events
+    let dragging = false, startX = 0;
+
+    sliderImageEl.addEventListener('mousedown', e => {
+      dragging = true; 
+      startX = e.clientX;
+    });
+
+    sliderImageEl.addEventListener('mouseup', e => {
+      if (!dragging) return;
+      const dx = e.clientX - startX;
+      if (dx > 30) prevSlide();
+      else if (dx < -30) nextSlide();
+      dragging = false;
+      startSlideShow();
+    });
+
+    sliderImageEl.addEventListener('mouseleave', () => {
+      dragging = false;
+    });
+
+    sliderImageEl.addEventListener('touchstart', e => {
+      dragging = true; 
+      startX = e.touches[0].clientX;
+    });
+
+    sliderImageEl.addEventListener('touchend', e => {
+      if (!dragging) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      if (dx > 30) prevSlide();
+      else if (dx < -30) nextSlide();
+      dragging = false;
+      startSlideShow();
+    });
+
+    // Quantity change event
+    document.getElementById('detail-qty').addEventListener('change', updateDetailTotal);
+
+    // Handle browser back/forward
+   window.onpopstate = function (event) {
+  if (event.state) {
+    const state = event.state;
+
+    if (state.view === 'category') {
+      goBackToCategories();
+    } else if (state.view === 'product-list') {
+      showProducts(state.subcategory);
+    } else if (state.view === 'product-detail') {
+      const subcat = state.subcategory;
+      const productName = state.product;
+      if (subcat && productName) {
+        const product = subcategories[subcat]?.find(p => p.name === productName);
+        if (product) showProductDetail(product);
+      }
+    }
+  } else {
+    goBackToCategories();
+  }
+};
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const subcategory = urlParams.get('subcategory');
+      const product = urlParams.get('product');
+      
+      if (subcategory && subcategories[subcategory]) {
+        showProducts(subcategory);
+        
+        if (product) {
+          const foundProduct = subcategories[subcategory].find(p => p.name === product);
+          if (foundProduct) showProductDetail(foundProduct);
+        }
+      }
+    });
+    
+    
+  </script>
+  
 </body>
 </html>
